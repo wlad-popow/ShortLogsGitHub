@@ -41,7 +41,6 @@ namespace WindowsFormsApplication2
             System.Console.WriteLine(uzers.Count);
             foreach (string i in uzers)
             {
-                result += "\r\n" + i + "\r\n" + "\r\n";
                 Poisk(i);
             }
 
@@ -55,20 +54,17 @@ namespace WindowsFormsApplication2
             int counter = 0;
             while ((line = file1.ReadLine()) != null)
             {
-                if (line.IndexOf("commit") == 0)
-                {
-                    counter = 0;
-                }
                 if (line.IndexOf(Autor) == 0)
                 {
                     counter = 1;
                 }
-                else
+                if (line.IndexOf("commit") == 0)
                 {
-                    if (counter == 1)
-                    {
-                        result += line + "\r\n";
-                    }
+                    counter = 0;
+                }
+                if (counter == 1)
+                {
+                    result += line + "\r\n";
                 }
             }
             file1.Close();
