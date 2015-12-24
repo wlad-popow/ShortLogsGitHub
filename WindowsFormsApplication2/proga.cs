@@ -13,6 +13,7 @@ namespace WindowsFormsApplication2
         string line;
         string filename;
         string result = "";
+        string save ="";
         public void main()
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -45,13 +46,31 @@ namespace WindowsFormsApplication2
                 Poisk(i);
             }
 
-            System.IO.File.WriteAllText(@"C:\Users\Ragnareg\Desktop\ShortLog.txt", result);            
+
+
+            Stream myStream;
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+            saveFileDialog1.Filter = "txt files (*.txt)|*.txt";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {  
+                if ((myStream = saveFileDialog1.OpenFile()) != null)
+                {
+                    save = saveFileDialog1.FileName;
+                    myStream.Close();
+                }
+            }
+
+            System.IO.File.WriteAllText(save, result);            
             file1.Close();
         }
 
         void Poisk(string Autor)
         {
-            System.IO.StreamReader file1 = new System.IO.StreamReader(@"C:\Users\Ragnareg\Desktop\a.txt");
+            System.IO.StreamReader file1 = new System.IO.StreamReader(filename);
             int counter = 0;
             while ((line = file1.ReadLine()) != null)
             {
